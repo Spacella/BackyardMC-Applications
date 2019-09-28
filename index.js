@@ -3,16 +3,19 @@ const Discord = require("discord.js");
 const client = new Discord.Client();
 const config = require("./config.json");
 
+// Console Colors
+const chalk = require('chalk');
+
 // Don't use ' ', try using " " instead unless you're going to use ${} then use ` `
 
 // Bot Startup Message
 client.once("ready", () => {
-    console.log("-------------------------------");
-    console.log("| Backyard MC Applications Bot |");
-    console.log("| Up and Running!              |");
-    console.log("| Version 0.1                  |");
-    console.log("| Made by: Spacella            |");
-    console.log("-------------------------------");
+    console.log(chalk.yellow("-------------------------------"));
+    console.log(chalk.yellow("| Backyard MC Applications Bot |"));
+    console.log(chalk.yellow("| Up and Running!              |"));
+    console.log(chalk.yellow("| Version 0.1                  |"));
+    console.log(chalk.yellow("| Made by: Spacella            |"));
+    console.log(chalk.yellow("-------------------------------"));
 
     //Set the activity of the bot
     client.user.setActivity("for new applicants.", { type: "WATCHING" });
@@ -32,13 +35,13 @@ client.on("guildMemberAdd", member => {
     const base = new Discord.RichEmbed();
 	// Embed Contents
     base.setTitle("Welcome to the BackyardMC Applications Discord!");
-    base.setColor(11044352); // What color is this?
+    base.setColor(11044352); 
     // Description of the Embed
     base.setDescription("Glad to know that you want to apply! React below for the position you would like to apply for. \n\n" +
         "Thanks, BackyardMC Team \n \n" +
-        "Moderation Staff - <emoji>\n" +
+        "Moderation Staff - <:blurpleban:627533909097447424>\n" +
         "Build Team - :hammer:\n" +
-        "Graphic Designer - <emoji>");
+        "Graphic Designer - :computer:");
 
     // Create a channel with the members name
     server.createChannel(member.displayName, "").then(channel => {
