@@ -56,15 +56,17 @@ client.on("guildMemberAdd", member => {
         });
 
         // Send the embed.
-        let rm = await channel.send(base)
+        channel.send(base).then(m => {
 
-        // Insert emojis here - no need to change anything in loop, since it counts the length. 
-        let reactions = ['🔨','💻','<:blurpleban:627533909097447424>']
-        
-        // Reaction loop.
-        for(let i = 0; i < reactions.length; i++) {
-            await rm.react(reactions[i])
-        }
+            // Insert emojis here - no need to change anything in loop, since it counts the length. 
+            let reactions = ['🔨','💻','<:blurpleban:627533909097447424>']
+
+            // Reaction loop.
+            for(let i = 0; i < reactions.length; i++) {
+                m.react(reactions[i])
+            }
+
+        })
 
         // Log the Creation of Application
         console.log(chalk.magenta(`${member.displayName} Created joined and Application.\n \n`,
