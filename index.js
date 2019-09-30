@@ -39,7 +39,7 @@ client.on("guildMemberAdd", member => {
     // Description of the Embed
     base.setDescription("Glad to know that you want to apply! React below for the position you would like to apply for. \n\n" +
         "Thanks, BackyardMC Team \n \n" +
-        "Moderation Staff - <:blurpleban:627533909097447424>\n" +
+        "Moderation Staff - 🔎\n" +
         "Build Team - :hammer:\n" +
         "Graphic Designer - :computer:");
 
@@ -59,7 +59,7 @@ client.on("guildMemberAdd", member => {
         channel.send(base).then(m => {
 
             // Insert emojis here - no need to change anything in loop, since it counts the length. 
-            let reactions = ['🔨','💻','<:blurpleban:627533909097447424>']
+            let reactions = ['🔨','💻','🔎']
 
             // Reaction loop.
             for(let i = 0; i < reactions.length; i++) {
@@ -70,10 +70,32 @@ client.on("guildMemberAdd", member => {
 
         // Log the Creation of Application
         console.log(chalk.magenta(`${member.displayName} Created joined and Application.\n \n`,
-            `Time: ${member.joinedTimestamp}\n`,
-            `Day: ${member.joinedAt.getDay}\n`,
-            `Month: ${member.joinedAt.getMonth}`));
+            `Time: ${member.joinedTimestamp}\n`));
     })
+
+    const filter = (reaction, user) => {
+        return ['🔨','💻','🔎'].includes(reaction.emoji.name) && user.id === message.author.id;
+    };
+
+    message.awaitReactions(filter, { max: 1, time: 60000, errors: ['time'] })
+        .then(collected => {
+            const reaction = collected.first();
+
+            if (reaction.emoji.name === '🔨') {
+                message.reply('Build Team');
+            }
+            if (reaction.emoji.name === '💻') {
+                message.reply('Graphics Team');
+            }
+            if (reaction.emoji.name === '🔎') {
+                message.reply('Moderation Team');
+            }
+        })
+        .catch(collected => {
+            console.log(`After a minute, only ${collected.size} out of 4 reacted.`);
+            message.reply('You didn\'t reply with a reaction, please rejoin the server to create a new application.');
+        });
+
 });
 
 client.login(`${config.token}`);
